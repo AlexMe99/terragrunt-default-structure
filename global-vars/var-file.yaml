@@ -1,0 +1,13 @@
+some-vars:
+  i-am-a-list:
+    - item1
+    - item2
+    - item3
+  i-am-a-string: "Hello, World!"
+  i-am-a-number: 42
+some-more-vars:
+  another-list:
+    - foo
+    - bar
+  another-string: "Goodbye, World!"
+  another-number: 3.14
