@@ -11,7 +11,20 @@ You can explore a practical example of this architecture in the [terragrunt-defa
 
 ## Directory Structure
 
-A clear and consistent directory structure forms the foundation of any Terragrunt project. It improves readability, supports team collaboration, and simplifies CI/CD automation.
+A clear and consistent directory structure forms the foundation of any Terragrunt project. It improves readability, supports team collaboration, and simplifies CI/CD automation. When you look into the presented example repository, the following directory structure is used:
+
+```TEXT
+repo/
+├── local-tf-modules/
+│   └── unit-module/
+├── tg-base/
+│   └── _templates/
+│   └── stack_level_a/
+│       └── stack_level_b/
+│           └── unit-from-template/
+│           └── unit-standalone/
+└── global-vars/
+```
 
 ### Core Directories
 
@@ -62,7 +75,31 @@ One current limitation is that [Terragrunt does not support nested includes](htt
 
 ## Variables and Configurations
 
-After setting up the directory hierarchy, the next step is defining how variables and configurations flow through it. Variables form the backbone of any Terragrunt setup — they make your infrastructure flexible and reusable, but only if managed consistently.
+After setting up the directory hierarchy, the next step is defining how variables and configurations flow through it. Variables form the backbone of any Terragrunt setup — they make your infrastructure flexible and reusable, but only if managed consistently. Again let's see how the example repository fills the different directories with files containing variables and configurations:
+
+```TEXT
+repo/
+├── local-tf-modules/
+│   └── unit-module/
+│       └── main.tf
+│       └── outputs.tf
+│       └── variables.tf
+├── tg-base/
+│   ├── _templates/
+│   │   └── unit.hcl
+│   ├── stack_level_a/
+│   │   ├── stack_level_b/
+│   │   │   ├── unit-from-template/
+│   │   │   │   └── terragrunt.hcl
+│   │   │   ├── unit-standalone/
+│   │   │   │   └── terragrunt.hcl
+│   │   │   └── stack_level_a.hcl
+│   │   └── stack_level_a.hcl
+│   └── base-configuration.hcl
+├── global-vars/
+│   └── var-file.yaml
+└── root.hcl
+```
 
 ### Basics
 
@@ -122,7 +159,7 @@ Terragrunt’s modular approach isolates state files per unit, resulting in:
 * **Smaller, more manageable state files** which are easier to handle, safer to version, and less prone to corruption.
 * **Better scalability and safety** especially when managing complex environments or running frequent updates across multiple units.
 
-### Path-Relative-to-Include
+### "path-relative-to-include"
 
 The [`path_relative_to_include()`](https://github.com/AlexMe99/terragrunt-default-structure/blob/main/root.hcl) function allows organizing state paths to mirror the Terragrunt directory hierarchy.
 

@@ -21,7 +21,7 @@ dependency "another_unit" {
 }
 
 terraform {
-  source = "${get_repo_root()}/local-tf-modules/unit"
+  source = "${get_repo_root()}/local-tf-modules/unit-module"
 }
 
 locals {
