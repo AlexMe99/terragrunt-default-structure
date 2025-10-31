@@ -1,8 +1,6 @@
 
 # Managing Large-Scale Infrastructure with Terragrunt and Terraform/OpenTofu
 
-## Introduction
-
 Managing infrastructure with **Terraform/OpenTofu** and **Terragrunt** can quickly become complex — especially as environments, teams, and requirements grow. Having a transparent, readable, and **DRY (Don’t Repeat Yourself)** repository structure is essential for maintaining scalability and manageability over time.
 
 The approach described here has been proven across real-world projects ranging from a few dozen to several hundred Terragrunt units. It’s adaptable to any setup and built around a **hierarchical structure** that makes it easy to configure, extend, and reuse components.
@@ -10,8 +8,6 @@ The approach described here has been proven across real-world projects ranging f
 This structure enables multiple teams to collaborate within the same repository without interfering with one another, simplifying how infrastructure changes are developed and deployed. Designed with **CI/CD pipelines** in mind, it supports fast, reliable deployments — whether you’re updating a single module or rolling out changes across entire stacks.
 
 You can explore a practical example of this architecture in the [terragrunt-default-structure repository](https://github.com/AlexMe99/terragrunt-default-structure).
-
----
 
 ## Directory Structure
 
@@ -68,8 +64,6 @@ This allows templates to remain flexible while individual units can override spe
 
 One current limitation is that [Terragrunt does not support nested includes](https://github.com/gruntwork-io/terragrunt/issues/1566). A common workaround is to use [`read_terragrunt_config`](https://terragrunt.gruntwork.io/docs/features/includes/#using-read_terragrunt_config) to import shared data across deeper hierarchies.
 
----
-
 ## Variables and Configurations
 
 After setting up the directory hierarchy, the next step is defining how variables and configurations flow through it. Variables form the backbone of any Terragrunt setup — they make your infrastructure flexible and reusable, but only if managed consistently.
@@ -114,8 +108,6 @@ To manage dependencies correctly:
 * Initialize dependencies in the right order.
 * Use [mock outputs](https://terragrunt.gruntwork.io/docs/features/stacks/#unapplied-dependency-and-mock-outputs) cautiously during planning or validation to avoid masking real dependency issues.
 
----
-
 ## Remote State
 
 Always use **remote state**. The Terraform state file is the single source of truth for your deployed infrastructure — losing or corrupting it can cause severe issues.
@@ -146,8 +138,6 @@ Benefits include:
 
 In large environments, distributing state files across multiple backends can prevent throttling and improve performance.
 
----
-
 ## Provider Configuration
 
 Efficient provider management ensures consistency, faster initialization, and better caching.
@@ -174,8 +164,6 @@ Use `if_exists = "skip"` at the root to avoid overwriting local provider definit
 See [this example configuration](https://github.com/AlexMe99/terragrunt-default-structure/blob/main/tg-base/_templates/unit.hcl).
 
 Maintain version consistency even when customizing — consistent provider versions reduce reinitialization and network overhead, speeding up CI/CD runs.
-
----
 
 ## Adding New Stacks and Scaling Units
 
@@ -205,8 +193,6 @@ If your infrastructure becomes highly uniform (e.g., hundreds of identical stack
 * Blueprinting or templating systems for programmatic stack generation
 
 For most dynamic, heterogeneous environments, however, the implicit stack model remains the most flexible and maintainable approach.
-
----
 
 ## Terraform Modules
 
@@ -246,8 +232,6 @@ A simple rule of thumb:
 * **Move to remote** once stability and collaboration become priorities.
 
 This evolution balances early agility with long-term reliability.
-
----
 
 ## Conclusion
 
